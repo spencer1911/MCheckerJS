@@ -5,6 +5,8 @@ Clean proxyless Minecraft Username Checker
 <br>
 `npm i`
 <br>
+
+
 **Executing**
 <br>
 First input usernames that you want to check in *usernames.txt*
@@ -13,6 +15,8 @@ Then just do:
 <br>
 `node index.js` or `node .`
 <br>
+
+
 **Etc...**
 <br>
 Rate-Limit: 600 requests in 10 minutes (or less)
