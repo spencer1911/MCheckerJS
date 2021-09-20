@@ -1,5 +1,5 @@
 {
-  "name": "MCheckerJS",
+  "name": "mcheckerjs",
   "version": "0.1",
   "description": "A clean proxyless Minecraft Username Checker",
   "main": "index.js",
