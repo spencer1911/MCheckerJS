@@ -7,6 +7,7 @@ const fs = require('fs');
 const readline = require('readline');
 const request = require('request');
 const chalk = require('chalk');
+const { yellow } = require('chalk');
 
 const rl = readline.createInterface({
     input: fs.createReadStream('usernames.txt'),
@@ -30,7 +31,17 @@ rl.on('line', (line) => {
         if (line.includes(` `)) {
             console.log(chalk.yellow("A line contains a invalid symbol."))
             fs.appendFile('./invalid.txt', `${line.toString()}, <----- Invalid Symbol \n`, function(){})
-        } else 
+        } else
+        
+        if (String(body).includes("TooManyRequestsException")) {
+            console.log(yellow("Rate-limit"))
+            fs.appendFile('./invalid.txt', `${line.toString()}, <----- Rate-limited \n`, function(){})
+        } else
+
+        if (String(body).includes("Requested")) {
+            console.log(yellow("Invalid Symbol Request"))
+            fs.appendFile('./invalid.txt', `${line.toString()}, <----- Invalid Symbol \n`, function(){})
+        } else
 
         if (String(body).startsWith('{"name":')) {
             fs.appendFile('./unavailables.txt', `${line}, \n`, function(){})
