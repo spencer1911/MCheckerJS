@@ -1,6 +1,7 @@
 # MCheckerJS
 Clean proxyless Minecraft Username Checker
 <br>
+
 **Set-up**
 <br>
 `npm i`
