@@ -1,4 +1,4 @@
-# MCheckerJS
+# MCheckerJS v0.2
 Clean proxyless Minecraft Username Checker
 <br>
 
