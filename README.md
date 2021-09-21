@@ -48,4 +48,5 @@ Depois execute estes comandos para abrir:
 **Etc...**
 <br>
 Rate-Limit: 600 nicks em 10 minutos (ou menos)
+
 Punição de Rate-Limit: 3-5 minutos (10 minutos se você quiser checar 600 nicks novamente.)
