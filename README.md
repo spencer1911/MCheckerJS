@@ -19,7 +19,7 @@ Then just do:
 
 Available nicks will be on *availables.txt*; <br>
  Unavailable nicks will be on *unavailables.txt*; <br>
- Invalid nicks will be on *invalid.txt* (showing what went wrong);
+ Invalid nicks will be on *invalid.txt* (showing what went wrong while checking);
  
  
 **Etc...**
@@ -47,6 +47,10 @@ Depois execute estes comandos para abrir:
 <br>
 `node index.js` ou `node .` (node ponto)
 <br>
+
+Nicks disponiveis vão estar no arquivo availables.txt; <br>
+Nicks indisponiveis vão estar no arquivo  unavailables.txt; <br>
+Nicks invalidos vão estar no arquivo invalid.txt (mostrando o que deu errado na hora de checar);
 
 
 **Etc...**
