@@ -17,7 +17,11 @@ Then just do:
 `node index.js` or `node .`
 <br>
 
-
+Available nicks will be on *availables.txt*;
+ Unavailable nicks will be on *unavailables.txt*
+ Invalid nicks will be on *invalid.txt* (showing what went wrong)
+ 
+ 
 **Etc...**
 <br>
 Rate-Limit: 600 requests in 10 minutes (or less)
