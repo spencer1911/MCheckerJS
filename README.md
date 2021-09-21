@@ -17,9 +17,9 @@ Then just do:
 `node index.js` or `node .`
 <br>
 
-Available nicks will be on *availables.txt*; \n
- Unavailable nicks will be on *unavailables.txt* \n
- Invalid nicks will be on *invalid.txt* (showing what went wrong)
+Available nicks will be on *availables.txt*; <br>
+ Unavailable nicks will be on *unavailables.txt*; <br>
+ Invalid nicks will be on *invalid.txt* (showing what went wrong);
  
  
 **Etc...**
