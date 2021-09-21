@@ -22,3 +22,30 @@ Then just do:
 <br>
 Rate-Limit: 600 requests in 10 minutes (or less)
 Rate-Limit Delay: 3-5 minutes (10 if you want to check another 600 nicks)
+
+# PT-BR
+
+## MCheckerJS
+Simples checker de Nicknames para Minecraft sem uso de qualquer proxy.
+<br>
+
+**Instalando**
+<br>
+`npm i`
+<br>
+
+
+**Executando**
+<br>
+Primeiro coloque os nicks que deseja checar no arquivo *usernames.txt*
+<br>
+Depois execute estes comandos para abrir:
+<br>
+`node index.js` ou `node .` (node ponto)
+<br>
+
+
+**Etc...**
+<br>
+Rate-Limit: 600 nicks em 10 minutos (ou menos)
+Punição de Rate-Limit: 3-5 minutos (10 minutos se você quiser checar 600 nicks novamente.)
