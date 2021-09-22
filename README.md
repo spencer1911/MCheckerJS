@@ -1,5 +1,5 @@
-# MCheckerJS v0.2
-Clean proxyless Minecraft Username Checker
+# MCheckerJS v2.0 - With a new look ✨
+Clean proxyless Minecraft Username **Generator** and **Checker**
 <br>
 
 **Set-up**
@@ -9,16 +9,13 @@ Clean proxyless Minecraft Username Checker
 
 
 **Executing**
-<br>
-First input usernames that you want to check in *usernames.txt*
-<br>
-Then just do:
-<br>
-`node index.js` or `node .`
-<br>
+Execute the command `node .` then answer the "questions"
+<br> "How many characters?" = the amount of letters you want to the random strings
+<br> "How many lines?" = the amount of random strings 
+<br> "Do you want to check the usernames? (yes or no)"<br> = choose Yes if you want to generate the strings and check them<br> = chose No if you dont want to check them.<br>
 
 Available nicks will be on *availables.txt*; <br>
- Invalid nicks will be on *invalid.txt* (showing what went wrong while checking);
+Invalid nicks will be on *invalids.txt*;
  
  
 **Etc...**
