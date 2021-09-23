@@ -1,4 +1,4 @@
-# MCheckerJS v2.0 - With a new look ✨
+# MCheckerJS v2.5 - With a new look ✨
 Clean proxyless Minecraft Username **Generator** and **Checker**
 <br>
 
