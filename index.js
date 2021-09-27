@@ -55,7 +55,7 @@ rl.question(chalk.white(`[ ${chalk.yellow('1')} ] AiO (All-in-One)\n[ ${chalk.ye
                                     case "yes":
                                         fs.writeFile('./usernames.txt', allPwds2, function(){})
                                         lineReader.eachLine('./usernames.txt', function(line) {
-                                            request('https://api.mojang.com/users/profiles/minecraft/' + line, function (error, response, body) {  
+                                            request(api + line, function (error, response, body) {  
                                             switch (true) {
                                                 case String(body) === '':
                                                     console.log(chalk.green(`${chalk.whiteBright(`[${chalk.greenBright(' ✔ ')}]`)} Username ${line} is available.`))
