@@ -8,7 +8,7 @@ Clean proxyless Minecraft Username **Generator** and **Checker**
 <br>
 
 
-**Executing**
+**Executing**<br>
 There are 3 more options.<br>2 If you want to generate nicknames<br>3 If you want to check the usernames on usernames.txt<br>4 If you want to re-check the usernames of availables.txt.
  
  
