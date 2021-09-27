@@ -10,8 +10,8 @@ Clean proxyless Minecraft Username **Generator** and **Checker**
 **Executing** <br>
 `node index.js` or `node .`
 
-**Changes**<br>
-There are 3 more options.<br>2 If you want to generate nicknames<br>3 If you want to check the usernames on usernames.txt<br>4 If you want to re-check the usernames of availables.txt.
+**Changelog**<br>MASTER: changed from *if* to *switch*, providing more execution speed<br>
+3 more options.<br>2 If you want to generate nicknames<br>3 If you want to check the usernames on usernames.txt<br>4 If you want to re-check the usernames of availables.txt.
  
  
 **Etc...**
