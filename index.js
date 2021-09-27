@@ -1,194 +1,202 @@
 const fs = require('fs');
 const chalk = require('chalk');
 const lineReader = require('line-reader');
-const { stdin, stdout } = require('process');
+const {stdin,stdout} = require('process');
 const request = require('request');
 const readline = require('readline');
-const { yellowBright, red, green } = require('chalk');
-const { eachLine } = require('line-reader');
+const {yellowBright,red,green} = require('chalk');
+const settings = require('./settings.json')
 
-const rl = readline.createInterface({'input':stdin, 'output': stdout})
+const {eachLine} = require('line-reader');
+const rl = readline.createInterface({'input': stdin,'output': stdout})
 
-var charArray='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_';
+var charArray = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_';
 var api = 'https://api.mojang.com/users/profiles/minecraft/';
-var xx=0;
+var xx = 0;
 var theLines;
+var theLines2;
 var theLength;
-var theSep="\r\n";
-var allPwds="";
-var allPwds2="";
-var newPwd="";
+var theLength2;
+var theSep = "\r\n";
+var allPwds = "";
+var allPwds2 = "";
+var newPwd = "";
+var logo =
+`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+##     ##  ######  ##     ## ########  ######  ##    ## ######## ########  ${chalk.yellowBright('      ##  ######')} 
+###   ### ##    ## ##     ## ##       ##    ## ##   ##  ##       ##     ## ${chalk.yellowBright('      ## ##    ## ')}
+#### #### ##       ##     ## ##       ##       ##  ##   ##       ##     ## ${chalk.yellowBright('      ## ##       ')}
+## ### ## ##       ######### ######   ##       #####    ######   ########  ${chalk.yellowBright('      ##  ######  ')}
+##     ## ##       ##     ## ##       ##       ##  ##   ##       ##   ##   ${chalk.yellowBright('##    ##       ## ')}
+##     ## ##    ## ##     ## ##       ##    ## ##   ##  ##       ##    ##  ${chalk.yellowBright('##    ## ##    ## ')}
+##     ##  ######  ##     ## ########  ######  ##    ## ######## ##     ## ${chalk.yellowBright(' ######   ######   ')}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+`
 
-rl.question(chalk.white(`[ ${chalk.yellow('1')} ] AiO (All-in-One)\n[ ${chalk.yellow('2')} ] Nickname Generator\n[ ${chalk.yellow('3')} ] Nickname Checker\n[ ${chalk.yellow('4')} ] Available Re-Checker\n> `), (question) => {
-    switch (question) {
-        case ('1'):
-            rl.question(chalk.yellowBright('How many characters?\n> '), (characters) => {
-                if(isNaN(characters)) {
-                    console.log(chalk.red('Error! This is not a number.'))
-            
-                    rl.close()
-                } else {
-                    theLength=characters;
-                    rl.question(chalk.yellowBright('How many lines?\n> '), (lines) => {
-                        if(isNaN(characters)) {
-                            console.log(chalk.red('Error! This is not a number.'))
-            
-                            rl.close()
-                        } else {
-                            theLines=lines;
-            
-                            while (xx < theLines) {
-            
+console.log(logo)
+
+function mainStep() {
+    rl.question(chalk.cyanBright('\n[1] Generate / Check\n[2] Settings\n[3] Close\n' + chalk.white('\\> ')), (mainQuestion) => {
+        switch (mainQuestion) {
+            case "1":
+                theLines = settings.strAmount
+                theLength = settings.strLength
+                function aio() {
+                    rl.question(chalk.yellow(`\n${chalk.yellowBright('Do you want to use the settings file?\n> ')}`), (useSettings) => {
+                        switch(useSettings) {
+                            case "yes":
+                                theLines = settings.strAmount
+                                theLength = settings.strLength
+                                while (xx < theLines) {
                                 var x = 0;
                                 while (x < theLength) {
-            
-                                    newPwd = charArray.charAt(Math.floor(Math.random() * charArray.length));
-                                    allPwds += newPwd;
-                                    x++;
+                                newPwd = charArray.charAt(Math.floor(Math.random() * charArray.length));
+                                allPwds += newPwd;
+                                x++
                                 }
                                 allPwds2 = allPwds2 + allPwds + theSep;
                                 allPwds = "";
-                                xx++;
-                            }
-                            rl.question(chalk.yellowBright('Do you want to check the usernames? (yes or no)\n> '), (checkOption) => {
-                                switch (checkOption) {
-                                    case "yes":
+                                xx++
+                                }
+
+                                fs.writeFile('./usernames.txt', allPwds2, function(){})
+                                lineReader.eachLine('./usernames.txt', function(line) {
+                                    request(api + line, function (error, response, body) {  
+                                        if(line.length <= 2 || line.length > 16) return console.log(chalk.redBright(`${line} is invalid.`));
+                                        
+                                        switch (true) {
+                                            case String(body) === '':
+                                                console.log(line + chalk.greenBright(' is available.'))
+                                                fs.appendFile('./availables.txt', `${line}, \n`, function(){})
+                                            break;
+                                            
+                                            case String(body).includes(`{"name":`):
+                                                console.log(`${chalk.redBright(`${line} is unavailable.`)}`)
+                                            break;
+                                        }   
+                                    })
+                                    })
+                                    rl.close()
+                            break;
+                            case "no":
+                                function theQuestions() {
+                                rl.question('how many characters?\n> ', (chars) => {
+                                    theLength2 = chars;
+
+                                    rl.question('how many lines?\n> ', (liness) => {
+                                        theLines2 = liness;
+
+                                        while (xx < theLines2) {
+                                            var x = 0;
+                                                while (x < theLength2) {
+                                                    newPwd = charArray.charAt(Math.floor(Math.random() * charArray.length));
+                                                    allPwds += newPwd;
+                                                    x++
+                                                }
+                                            allPwds2 = allPwds2 + allPwds + theSep;
+                                            allPwds = "";
+                                            xx++
+                                        }
+
                                         fs.writeFile('./usernames.txt', allPwds2, function(){})
                                         lineReader.eachLine('./usernames.txt', function(line) {
-                                            request('https://api.mojang.com/users/profiles/minecraft/' + line, function (error, response, body) {  
-                                                if(line.length <= 2) return console.log(chalk.redBright(`${line} is invalid.`));
-                                                if(line.length > 16) return console.log(chalk.redBright(`${line} is invalid.`));
+                                        request(api + line, function (error, response, body) {  
+                                            if(line.length <= 2 || line.length > 16) return console.log(chalk.redBright(`${line} is invalid.`));
+                                            
                                             switch (true) {
                                                 case String(body) === '':
-                                                    console.log(chalk.green(`${chalk.whiteBright(`[${chalk.greenBright(' ✔ ')}]`)} Username ${line} is available.`))
+                                                    console.log(line + chalk.greenBright(' is available.'))
                                                     fs.appendFile('./availables.txt', `${line}, \n`, function(){})
-                                                break;
-
-                                                case String(body).includes('TooManyRequestsException'):
-                                                    console.log(chalk.gray(String(body)))
-                                                    console.log(line + ' got rate-limited')
                                                 break;
                                                 
                                                 case String(body).includes(`{"name":`):
-                                                    console.log(`${chalk.red(`${line} is unavailable.`)}`)
+                                                    console.log(`${chalk.redBright(`${line} is unavailable.`)}`)
                                                 break;
-                                                
                                             }   
                                         })
                                         })
-                                        rl.close()
-                                    break;
-                                    case "no":
-                                        fs.writeFile('./usernames.txt', allPwds2, function(){})
-            
-                                        console.log(yellowBright('Ok! Your nicknames have been stored in usernames.txt'))
-                                            
-                                        rl.close()
-                                    break;
-                                    default:
-                                        console.log(red("Sorry! I don't recognize this option. Use yes or no."))
-                                    
-                                        rl.close()
-                                    break;
+                                    })
+                                })
                                 }
-                        })
-                    }
-                })}
-            })
-        break;
-        case ('2'): 
-        var linesAmount;
-        var strLength;
-
-        rl.question(chalk.yellow('Strings Size:\n> '), (length2) => {
-            strLength = length2;
-            rl.question(chalk.yellow('Lines Amount:\n> '), (lines2) => {
-                linesAmount = lines2;
-                allStrs = "";
-                newStr = "";
-                allStrs2 = "";
-                while (xx < linesAmount) {
-
-                    var x = 0;
-                    while (x < strLength) {
-        
-                        newStr = charArray.charAt(Math.floor(Math.random() * charArray.length));
-                        allStrs += newStr;
-                        x++;
-                    }
-                    allStrs2 = allStrs2 + allStrs + theSep;
-                    allStrs = "";
-                    xx++;
+                            rl.close()
+                            break;
+                        }
+                    })
                 }
-                rl.question(chalk.yellow('Want to print the results?:\n> '), (yesOrNo) => {
-                    switch (yesOrNo) {
-                        case ('yes'):
-                            console.log(allStrs2)
-                            fs.writeFile('./usernames.txt', `${allStrs2}\n`, function(){})
-                            console.log(chalk.yellowBright(`\n Your strings has been stored in usernames.txt.`))
-                            rl.close()
-                        break;
-                        case ('no'):
-                            fs.writeFile('./usernames.txt', `${allStrs2}\n`, function(){})
-                            console.log(chalk.yellowBright(`\n Your strings has been stored in usernames.txt.`))
-                            rl.close()
-                        break;
-                    }
-                })
-            })
-        })  
-        break;
-        case '3':
-            console.log('\n')
-            eachLine('./usernames.txt', function(line) {
-                request(api + line, function (that) {
-                    switch (true) {
-                        case String(body) === '':
-                            console.log(chalk.green(`${chalk.whiteBright(`[${chalk.greenBright(' ✔ ')}]`)} Username ${line} is available.`))
-                            fs.appendFile('./availables.txt', `${line}, \n`, function(){})
-                        break;
+                aio()
+            break;
+            case "2":
+                function optionStep() {
+                    rl.question(chalk.cyan(`\n   [1] View Settings File\n   [2] Change Settings\n   [3] Back\n   ${chalk.white('\\>')} `), (settingsOption) => {
+                        switch(settingsOption) {
+                            case "1":
+                                console.log('\n' + chalk.gray(JSON.stringify(settings, null, 2)))
+                                optionStep()
+                            break;
+                            case "2":
+                                function changeSettingsStep() {
+                                    rl.question(chalk.yellowBright('String Length: '), (stringLength) => {
+                                    switch(true) {
+                                        case (isNaN(stringLength)):
+                                            console.log(red('This is not a number.'))
+                                            changeSettingsStep()
+                                        break;
+                                        case (Number(stringLength) > Number(16)):
+                                            console.log("This number is greater than 16.")
+                                            changeSettingsStep()
+                                        break;
+                                        default:
+                                            JSON.stringify(settings, null, 2)
+                                            settings.strLength = stringLength;
+                                            fs.writeFile('./settings.json', JSON.stringify(settings, null, 2), function(){})
+                                        break;
+                                        }
 
-                        case String(body).includes('TooManyRequestsException'):
-                            console.log(chalk.gray(String(body)))
-                            console.log(line + ' got rate-limited')
-                        break;
-                        
-                        case String(body).includes(`{"name":`):
-                            console.log(`${chalk.red(`${line} is unavailable.`)}`)
-                        break;
-                        
-                    }
-
-                if(line.length <= 2) console.log(chalk.redBright(`${line} is invalid.`));
-                if(line.length > 16) console.log(chalk.redBright(`${line} is invalid.`));
-
-                
-            }) 
-        })
-        rl.close()
-        break;
-    case '4':
-        console.log('\n')
-        eachLine('./availables.txt', function(line) {
-            request(api + line, 
-            function (err, res, body) {
-            if (String(body) === "") {
-                console.log(green(`${line} still available!`))
-                fs.appendFile('./stillAvailable.txt', `${line}\n`, function(){})
-            } 
-            if (String(body).includes(`"id"`) === true){
-                console.log(red(`${line} is not available anymore`))
-            } 
-            if (String(body).includes(`TooMany`) === true) {
-                console.log(chalk.yellow(`${line} got rate-limited. Forcing to close...`))
-                rl.off()
-            }
-        }) 
-        rl.close()
+                                        rl.question(chalk.yellowBright('String Amount: '), (stringAmount) => {
+                                        switch(true) {
+                                            case (isNaN(stringAmount)):
+                                            console.log(red('This is not a number.'))
+                                            changeSettingsStep()
+                                        break;
+                                        case (Number(stringAmount) > Number(1000)):
+                                            console.log("This number is greater than 1000.")
+                                            changeSettingsStep()
+                                        break;
+                                        default:
+                                            JSON.stringify(settings, null, 2)
+                                            settings.strAmount = stringAmount;
+                                            fs.writeFile('./settings.json', JSON.stringify(settings, null, 2), function(){})
+                                            optionStep()
+                                        break;
+                                        }
+                                        })
+                                        
+                                    })
+                                }
+                                changeSettingsStep()
+                            break;
+                            case "3":
+                                mainStep()
+                            break;
+                            default:
+                                console.log("I don't recognize this option.")
+                                optionStep()
+                            break;
+                        }
+                    })
+                }
+                optionStep()
+            break;
+            case "3":
+                rl.close()
+            break;
+            default:
+                console.log("\nI don't recognize this option\n")
+                mainStep()
+            break;
+        }
     })
-    break;
-    default:
-        console.log(chalk.red(`I don't recognize this option, closing.`))
-        rl.close()
 }
-})
+mainStep()
+
+
