@@ -9,14 +9,7 @@ Clean proxyless Minecraft Username **Generator** and **Checker**
 
 
 **Executing**
-
-Execute the command `node .` then answer the "questions"
-<br> "How many characters?"<br> = the amount of letters you want to the random strings <br>
-<br> "How many lines?"<br> = the amount of random strings <br>
-<br> "Do you want to check the usernames? (yes or no)"<br> = choose Yes if you want to generate the strings and check them<br> = choose No if you dont want to check them.<br>
-
-Available nicks will be on *availables.txt*; <br>
-Invalid nicks will be on *invalids.txt*;
+There are 3 more options.<br>2 If you want to generate nicknames<br>3 If you want to check the usernames on usernames.txt<br>4 If you want to re-check the usernames of availables.txt.
  
  
 **Etc...**
