@@ -18,10 +18,8 @@ Clean proxyless Minecraft Username **Generator** and **Checker**
 - Removed Rate-limit from checking (later i see if i will add
  
  
-**Etc...**
-<br>
-Rate-Limit: 619 requests in a row
-
-Rate-Limit Delay: 3-5 minutes (10 if you want to check another 600 nicks)
+**Rate-Limiting**<br>
+- Rate-Limit: 619 requests in a row;
+- Rate-Limit Delay: 3-5 minutes (10 if you want to check another 600 nicks)
 
 
