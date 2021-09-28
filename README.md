@@ -1,4 +1,4 @@
-# MCheckerJS v3.0 - Now with a Torpedo Speed ✨
+# MCheckerJS v4.0 - Now with a Torpedo Speed ✨
 Clean proxyless Minecraft Username **Generator** and **Checker**
 <br>
 
@@ -10,8 +10,12 @@ Clean proxyless Minecraft Username **Generator** and **Checker**
 **Executing** <br>
 `node index.js` or `node .`
 
-**Changelog**<br>__MASTER:__ changed from *if* to *switch*, providing more execution speed<br>
-3 more options.<br>2 If you want to generate nicknames<br>3 If you want to check the usernames on usernames.txt<br>4 If you want to re-check the usernames of availables.txt.
+**Changelog**<br>
+- Added settings handler from json;
+- If you wrote something wrong it will let you back
+- View / write json settings file
+- Even more compact check code
+- Removed Rate-limit from checking (later i see if i will add
  
  
 **Etc...**
